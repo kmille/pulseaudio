@@ -7,10 +7,11 @@
 # MPD 
 ## Packages
 root@bananapi /etc/pulse # dpkg -l | grep mpd  
-ii  libmpdclient2                      2.9-1                             armhf        client library for the Music Player Daemon
-ii  mpd                                0.19.1-1.1                        armhf        Music Player Daemon
+ii  libmpdclient2                      2.9-1                             armhf        client library for the Music Player Daemon   
+ii  mpd                                0.19.1-1.1                        armhf        Music Player Daemon  
 
 ## MPD Configuration 
+```
 root@bananapi /etc # cat /etc/mpd.conf | grep -vP '^#.*' | grep -vP '^\s*$'
 music_directory         "/var/lib/mpd/music"
 playlist_directory      "/var/lib/mpd/playlists"
@@ -31,22 +32,24 @@ audio_output {
     name     "MPD Pulse Output"
     server   "127.0.0.1"
 }
+```
 
 # Pulseaudio
 ## Packages 
-root@bananapi /etc/pulse # dpkg -l | grep pulse
-ii  libpulse0:armhf                    5.0-13                            armhf        PulseAudio client libraries
-ii  libpulsedsp:armhf                  5.0-13                            armhf        PulseAudio OSS pre-load library
-ii  pulseaudio                         5.0-13                            armhf        PulseAudio sound server
-ii  pulseaudio-module-zeroconf         5.0-13                            armhf        Zeroconf module for PulseAudio sound server
-ii  pulseaudio-utils                   5.0-13                            armhf        Command line tools for the PulseAudio sound server
+root@bananapi /etc/pulse # dpkg -l | grep pulse  
+ii  libpulse0:armhf                    5.0-13                            armhf        PulseAudio client libraries  
+ii  libpulsedsp:armhf                  5.0-13                            armhf        PulseAudio OSS pre-load library  
+ii  pulseaudio                         5.0-13                            armhf        PulseAudio sound server  
+ii  pulseaudio-module-zeroconf         5.0-13                            armhf        Zeroconf module for Pulse Audio sound server  
+ii  pulseaudio-utils                   5.0-13                            armhf        Command line tools for the PulseAudio sound server  
 
-## Configuratoin
+## Configuration
+```
 root@bananapi /etc/pulse # cat system.pa | grep -vP '^#.*' | grep -vP '^\s*$' 
 .ifexists module-udev-detect.so
 load-module module-udev-detect ignore_dB=1
 .else
-load-module module-detect
+load-module module-detect 
 .endif
 .ifexists module-esound-protocol-unix.so
 load-module module-esound-protocol-unix
@@ -66,8 +69,10 @@ load-module module-zeroconf-publish
 \# - load-module module-udev-detect ignore_dB=1 Fixes this won't fix bug
 \# 	https://bbs.archlinux.org/viewtopic.php?id=218731	
 \# 	https://bugs.launchpad.net/ubuntu/+source/pulseaudio/+bug/223133
+```
 
 # Run pulseaudio in system mode
+```
 root@bananapi ~ # pulseaudio --system
 W: [pulseaudio] main.c: Running in system mode, but --disallow-exit not set!
 W: [pulseaudio] main.c: Running in system mode, but --disallow-module-loading not set!
@@ -80,9 +85,9 @@ W: [pulseaudio] authkey.c: Failed to open cookie file '/var/run/pulse/.config/pu
 W: [pulseaudio] authkey.c: Failed to load authorization key '/var/run/pulse/.config/pulse/cookie': No such file or directory
 W: [pulseaudio] authkey.c: Failed to open cookie file '/var/run/pulse/.pulse-cookie': No such file or directory
 W: [pulseaudio] authkey.c: Failed to load authorization key '/var/run/pulse/.pulse-cookie': No such file or directory
+```
 
-
-# use it from remote (send laptop audio to banana pi; testet on Arch)
+# Use it from remote (send laptop audio to banana pi; tested on Arch)
 - pactl load-module module-tunnel-sink-new server=192.168.10.60 sink_name=banane channels=2 rate=44100
 - go to pavucontrol and sink for application (Playback => Chromium => dropdown menu)
 - Remove sink: pactl unload-module 32 (32 was printed running the ..sink-new command)
@@ -90,3 +95,4 @@ W: [pulseaudio] authkey.c: Failed to load authorization key '/var/run/pulse/.pul
 # Debugging tips
 - PULSE_SERVER=192.168.10.60 pavucontrol
 
+todo: systemd unit file   
