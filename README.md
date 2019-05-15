@@ -65,7 +65,7 @@ load-module module-position-event-sounds
 load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1;192.168.0.0/16
 load-module module-zeroconf-publish
 # important changes:
-# - no auth from localhost + local range (tell ymd to use 127.0.0.1 and not the sockte)
+# - no auth from localhost + local range (tell mpd to use 127.0.0.1 and not the sockets)
 # - load-module module-udev-detect ignore_dB=1 Fixes this won't fix bug
 # 	https://bbs.archlinux.org/viewtopic.php?id=218731	
 # 	https://bugs.launchpad.net/ubuntu/+source/pulseaudio/+bug/223133
