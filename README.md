@@ -95,5 +95,6 @@ W: [pulseaudio] authkey.c: Failed to load authorization key '/var/run/pulse/.pul
 # Debugging tips
 - PULSE_SERVER=192.168.10.60 pavucontrol
 - read mpd.log
+- pulseaudio --system -vvvvv
 
 todo: systemd unit file   
